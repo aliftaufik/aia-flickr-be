@@ -4,6 +4,7 @@
   "description": "Backend API for AIA Recruitment Test",
   "main": "index.js",
   "scripts": {
+    "start": "node bin/http.js",
     "dev": "nodemon bin/http.js",
     "test": "npx jest"
   },
