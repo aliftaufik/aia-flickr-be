@@ -3,7 +3,7 @@ const app = require("../app");
 
 test("GET api/images: Should return list of images (200)", () => {
   return request(app)
-    .get("/")
+    .get("/api/images")
     .then((response) => {
       expect(response.status).toEqual(200);
       const data = response.body;
