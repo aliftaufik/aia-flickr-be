@@ -2,32 +2,32 @@ const request = require("supertest");
 const app = require("../app");
 
 test(`GET api/images (200):
-    Should return data with properties: lastUpdate, images
+    Should return data with properties: last_update, images
     Each image should have properties:
     - title
-    - image
-    - link`, () => {
+    - image_url
+    - flickr_link`, () => {
   return request(app)
     .get("/api/images")
     .then((response) => {
       expect(response.status).toEqual(200);
 
       const data = response.body;
-      expect(data).toHaveProperty("lastUpdate");
+      expect(data).toHaveProperty("last_update");
       expect(data).toHaveProperty("images");
 
       const images = data.images;
       expect(Array.isArray(images)).toBe(true);
       expect(
-        images.every(({ title, image, link }) =>
-          [title, image, link].every((item) => !!item)
+        images.every(({ title, image_url, flickr_link }) =>
+          [title, image_url, flickr_link].every((item) => !!item)
         )
       ).toBe(true);
     });
 });
 
 test(`GET api/images?tags=* (200):
-    Should return data with properties: lastUpdate, images
+    Should return data with properties: last_update, images
     Each image should have properties:
     - tags
     Any of tags should match tags params`, () => {
@@ -38,14 +38,14 @@ test(`GET api/images?tags=* (200):
       expect(response.status).toEqual(200);
 
       const data = response.body;
-      expect(data).toHaveProperty("lastUpdate");
+      expect(data).toHaveProperty("last_update");
       expect(data).toHaveProperty("images");
 
       const images = data.images;
       expect(Array.isArray(images)).toBe(true);
       expect(
         images.every(({ tags }) =>
-          tags.any((item) => tagsParam.replace(" ", "").contains(item))
+          tags.some((item) => tagsParam.replace(" ", "").includes(item))
         )
       ).toBe(true);
     });
