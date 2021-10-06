@@ -2,8 +2,11 @@ const axios = require("axios");
 
 class MainController {
   static async getImages(req, res) {
+    const tags = req.query.tags ?? "";
+
     const { data } = await axios.get(
-      "https://www.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1"
+      "https://www.flickr.com/services/feeds/photos_public.gne?format=json&nojsoncallback=1&tagmode=any&tags=" +
+        tags
     );
 
     const result = {
